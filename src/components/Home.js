@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '@/css/App.less';
+import '@/styles/comms.less';
 class home extends Component {
   render() {
     return (

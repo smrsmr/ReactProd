@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon, DatePicker, LocaleProvider } from 'antd';
-//阿里图标库
+//公共样式
 import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 import router from '@/router/index';
 //404组件
 import NoMatch from '@/components/404/NoMatch';
+//react-router-dom
 import { Router as HashRouter, Route,Link, Switch} from 'react-router-dom';
-// import { BrowserRouter as HashRouter, Route, Link, Switch } from 'react-router-dom';
 import createHistory from 'history/createHashHistory';
 const history = createHistory();
+//antd
 const { Header, Sider, Content } = Layout;
 const { RangePicker } = DatePicker;
 const { SubMenu } = Menu;

@@ -6,18 +6,20 @@
   -webkit-transition: color .3s;
   -o-transition: color .3s;
   transition: color .3s;
+	&:hover{
+		color: #1890ff;
+	}
 }
-
-#root .trigger:hover {
-  color: #1890ff;
-}
-
 #root .logo {
 	height: 60px;
   margin: 16px;
+	img {
+		width: 100%;
+		height: 100%;
+		vertical-align: middle;
+	}
 }
-#root .logo img {
-	width: 100%;
-	height: 100%;
-	vertical-align: middle;
+.App {
+	text-align: center;
 }
+//antd 样式重写
