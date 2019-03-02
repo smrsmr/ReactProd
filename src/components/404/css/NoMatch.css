@@ -1,0 +1,11 @@
+.NoMatchContent {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.NoMatchContent h1 {
+	font-size: 390px;
+	color: #ccc;
+	font-weight: bold;
+	line-height: 100%;
+}
