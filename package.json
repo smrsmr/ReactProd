@@ -12,6 +12,7 @@
     "react-app-polyfill": "^0.2.1",
     "react-app-rewired": "2.0.2-next.0",
     "react-dom": "^16.8.3",
+    "react-hot-loader": "^4.7.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5"
   },
@@ -38,6 +39,7 @@
     "eslint-plugin-react": "^7.12.4",
     "prettier-eslint": "^8.8.2",
     "react-app-rewire-define-plugin": "^1.0.0",
+    "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewire-less": "^2.1.3"
   }
 }

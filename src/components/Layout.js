@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon, DatePicker, LocaleProvider } from 'antd';
+import { hot } from 'react-hot-loader';
 //公共样式
 import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
+//router
 import router from '@/router/index';
 //404组件
 import NoMatch from '@/components/404/NoMatch';
@@ -137,8 +139,8 @@ export class Layouts extends Component {
 	                  })
 	                }
 	                <Route component={NoMatch} />
-	                {/* <Redirect path="*" to="/" />  //当以上的path均不匹配时，重定向到'/' */}
 	              </Switch>
+	              {/* <Redirect path="*" to="/" />  //当以上的path均不匹配时，重定向到'/' */}
 	            </Content>
 	          </Layout>
 	        </Layout>
@@ -148,4 +150,4 @@ export class Layouts extends Component {
 	}
 }
 
-export default Layouts;
+export default hot(module)(Layouts);
