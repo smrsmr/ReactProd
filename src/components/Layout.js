@@ -6,11 +6,10 @@ import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 //router
-import router from '@/router/index';
-//404组件
-import NoMatch from '@/components/404/NoMatch';
+import {routes,setRouter} from '@/router/index';
+
 //react-router-dom
-import { Router as HashRouter, Route,Link, Switch} from 'react-router-dom';
+import { Router as HashRouter, Link } from 'react-router-dom';
 import createHistory from 'history/createHashHistory';
 const history = createHistory();
 //antd
@@ -60,39 +59,41 @@ export class Layouts extends Component {
 	  if (!isLoaded) {
 	    return <div>Loading...</div>;
 	  } else {
-	    const MenuTree = router.map((item,key) => (
-	      <Menu
-	        key={key}
-	        theme="dark"
-	        mode="inline"
-	        onClick={this.MenuClick}
-	        selectedKeys={this.state.pathName}
-	      >
-	        {
-	          //一级路由
-	          !item.childrens && !item.exact && (
-	            <Menu.Item key={item.key}>
-	              <Link to={item.path} replace>
-	                <Icon type={item.title.icon} />
-	                <span>{item.title.span}</span>
-	              </Link>
-	            </Menu.Item>
-	          )
-	        }
-	        {
-	          //二级路由 
-	          item.childrens && !item.exact && (
-	            <SubMenu key={item.key} title={<span><Icon type={item.title.icon} /><span>{item.title.span}</span></span>}>
-	              {
-	                item.childrens.map(v => (
-	                  <Menu.Item key={v.key}><Link to={v.path} replace><i className="iconfont" dangerouslySetInnerHTML={{__html:v.iconf}}></i>{v.title}</Link></Menu.Item>
-	                ))
-	              }
-	            </SubMenu>
-	          )
-	        }
-	      </Menu>
-	    ));
+	    const MenuTree = (
+	      routes.map((item,key) => (
+	        <Menu
+	          key={key}
+	          theme="dark"
+	          mode="inline"
+	          onClick={this.MenuClick}
+	          selectedKeys={this.state.pathName}
+	        >
+	          {
+	            //一级路由
+	            !item.childrens && !item.exact && (
+	              <Menu.Item key={item.key}>
+	                <Link to={item.path} replace>
+	                  <Icon type={item.title.icon} />
+	                  <span>{item.title.span}</span>
+	                </Link>
+	              </Menu.Item>
+	            )
+	          }
+	          {
+	            //二级路由 
+	            item.childrens && !item.exact && (
+	              <SubMenu key={item.key} title={<span><Icon type={item.title.icon} /><span>{item.title.span}</span></span>}>
+	                {
+	                  item.childrens.map(v => (
+	                    <Menu.Item key={v.key}><Link to={v.path} replace><i className="iconfont" dangerouslySetInnerHTML={{__html:v.iconf}}></i>{v.title}</Link></Menu.Item>
+	                  ))
+	                }
+	              </SubMenu>
+	            )
+	          }
+	        </Menu>
+	      ))
+	    );
 	    return (
 	      <HashRouter history={history}>
 	        <Layout style={{ minHeight: '100vh' }}>
@@ -124,23 +125,7 @@ export class Layouts extends Component {
 	              margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280
 	            }}
 	            >
-	              {/* <Route exact path="/" render={() => <Redirect to="/welcome" component={Home} />} /> */}
-	              <Switch>
-	                {
-	                  router.map((router,key) => {
-	                    if (router.exact) {
-	                      return  <Route exact key={key} path={router.path} component={router.component} />;
-	                    } else {
-	                      if (router.childrens) {
-	                        return  <Route  key={key} path={`${router.path}/:id`} component={router.component} />;
-	                      }
-	                      return  <Route  key={key} path={router.path} component={router.component} />;
-	                    }
-	                  })
-	                }
-	                <Route component={NoMatch} />
-	              </Switch>
-	              {/* <Redirect path="*" to="/" />  //当以上的path均不匹配时，重定向到'/' */}
+	             {setRouter}
 	            </Content>
 	          </Layout>
 	        </Layout>

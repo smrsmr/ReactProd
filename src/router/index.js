@@ -1,13 +1,25 @@
 /**
  * router 配置文件
  */
-import asyncComponent from '@/utils/AsyncComponent.js';
-const routes = [
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+//utils
+import Bundle from '@/utils/Bundle.js';
+//404组件
+import NoMatch from '@/components/404/NoMatch';
+
+const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);
+const PicturesWall = (props) => (<Bundle load={() => import('@/components/PicturesWall/PicturesWall')}>{(PicturesWall) => <PicturesWall {...props}/>}</Bundle>);
+const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
+const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
+export const routes = [
   {
     key: 'home',
     path: '/',
     exact: 'exact',
-    component: asyncComponent(()=>import('@/components/Home.js'))
+    // component: asyncComponent(()=>import('@/components/Home'))
+    component: require('@/components/Home').default
+    // component: Home
   },
   {
     key: 'user',
@@ -16,7 +28,9 @@ const routes = [
       icon: 'user',
       span: 'user'
     },
-    component: asyncComponent(()=>import('@/components/user/User'))
+    // component: asyncComponent(()=>import('@/components/user/User'))
+    // component: require('@/components/user/User').default
+    component: User
   },
   {
     key: 'picturesWall',
@@ -25,7 +39,9 @@ const routes = [
       icon: 'upload',
       span: 'picturesWall'
     },
-    component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    // component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    // component: require('@/components/PicturesWall/PicturesWall').default
+    component: PicturesWall
   },
   {
     key: 'barChart',
@@ -34,7 +50,7 @@ const routes = [
       icon: 'bar-chart',
       span: 'barChart'
     },
-    component: asyncComponent(()=>import('@/components/barChart/index')),
+    component: BarChart,
     childrens: [
       {
         key: 'line',
@@ -57,7 +73,7 @@ const routes = [
       icon: 'mail',
       span: 'mail'
     },
-    component: asyncComponent(()=>import('@/components/mail/index')),
+    component: Mail,
     childrens: [{
       key: 'write',
       path: '/mail/write',
@@ -78,7 +94,7 @@ const routes = [
       icon: 'cloud-o',
       span: 'cloudO'
     },
-    component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    component: PicturesWall
   },
   {
     key: 'appstoreO',
@@ -87,7 +103,7 @@ const routes = [
       icon: 'appstore-o',
       span: 'appstoreO'
     },
-    component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    component: PicturesWall
   },
   {
     key: 'team',
@@ -96,7 +112,7 @@ const routes = [
       icon: 'team',
       span: 'team'
     },
-    component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    component: PicturesWall
   },
   {
     key: 'shop',
@@ -105,8 +121,24 @@ const routes = [
       icon: 'shop',
       span: 'shop'
     },
-    component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
+    component: PicturesWall
   }
 ];
 
-export default routes;
+export const setRouter = (
+  <Switch>
+    {
+      routes.map((router,key) => {
+        if (router.exact) {
+          return  <Route exact key={key} path={router.path} component={router.component} />;
+        } else {
+          if (router.childrens) {
+            return  <Route  key={key} path={`${router.path}/:id`} component={router.component} />;
+          }
+          return  <Route  key={key} path={router.path} component={router.component} />;
+        }
+      })
+    }
+    <Route component={NoMatch} />
+  </Switch>
+);
