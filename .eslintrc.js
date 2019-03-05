@@ -56,7 +56,7 @@ module.exports = {
 		// "no-empty": 2, //块语句中的内容不能为空
 		// "no-func-assign": 2, //禁止重复的函数声明
 		// "no-invalid-this": 0, //禁止无效的this，只能用在构造器，类，对象字面量
-		// "no-redeclare": 2, //禁止重复声明变量
+		"no-redeclare": 2, //禁止重复声明变量
 		// "no-spaced-func": 2, //函数调用时 函数名与()之间不能有空格
 		// "no-this-before-super": 0, //在调用super()之前不能使用this或super
 		"no-undef": 1, //不能有未定义的变量

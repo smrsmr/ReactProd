@@ -63,6 +63,12 @@ export const routes = [
         path: '/barChart/bar',
         title: '柱状图',
         iconf: '&#xe601;'
+      },
+      {
+        key: 'pie',
+        path: '/barChart/pie',
+        title: '饼图',
+        iconf: '&#xe68b;'
       }
     ]
   },
