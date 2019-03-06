@@ -40,7 +40,7 @@ const echartsOption = {
       name:'天海湾',
       type:'line',
       stack: '总量',
-      data:[120, 132, 101, 134, 90, 230, 210]
+      data:[120, 132, 101, 134, 90, 230, 100]
     },
     {
       name:'鼎龙湾',

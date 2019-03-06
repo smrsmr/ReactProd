@@ -5,7 +5,7 @@ class barChat extends Component {
   renderDetail(pageType) {
 	  // const dynamicDetail = require(`./${pageType}/index`).default;
 	  // return dynamicDetail;
-	  const Page = AsyncComponent(() => import(`./${pageType}/index`));
+    const Page = AsyncComponent(() => import(`./${pageType}/index`));
 	  return Page;
   }
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
- 
+// import {  Redirect } from 'react-router-dom';
 const asyncComponent = (importComponent) => {
   return class extends Component {
     constructor() {
@@ -12,6 +12,9 @@ const asyncComponent = (importComponent) => {
       importComponent()
         .then(cmp => {
           this.setState({ component: cmp.default });
+        }).catch(() => {
+          //出错的时候重定向到首页
+          window.location.href = '/';
         });
     }
     componentWillUnmount() {

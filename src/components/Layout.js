@@ -89,11 +89,12 @@ export class Layouts extends Component {
 	          trigger={null}
 	          collapsible
 	          collapsed={this.state.collapsed}
+	          style={{overflow: 'auto', height: '100vh', position: 'fixed', left: 0}}
 	        >
 	          <div className="logo"><img src={require('@/img/logo.svg')} alt="" /></div>
 	          {MenuTree}
 	        </Sider>
-	        <Layout>
+	        <Layout style={{ marginLeft: 200 }}>
 	          <Header style={{ background: '#fff', padding: 0 }}>
 	            <Icon
 	              className="trigger"

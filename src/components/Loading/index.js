@@ -1,10 +1,12 @@
 import React from 'react';
+import { Spin } from 'antd';
 import Loadable from 'react-loadable';
+import '@/styles/comms.less';
 function Loading(props) {
   if (props.error) {
     return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
   } else if (props.pastDelay) {
-    return <div>Loading......</div>;
+    return <div className="Loading"><Spin size="large" /></div>;
   } else {
     return null;
   }
