@@ -17,9 +17,7 @@ export const routes = [
     key: 'home',
     path: '/',
     exact: 'exact',
-    // component: asyncComponent(()=>import('@/components/Home'))
-    component: require('@/components/Home').default
-    // component: Home
+    component: require('@/components/home/Home').default
   },
   {
     key: 'user',
@@ -28,8 +26,6 @@ export const routes = [
       icon: 'user',
       span: 'user'
     },
-    // component: asyncComponent(()=>import('@/components/user/User'))
-    // component: require('@/components/user/User').default
     component: User
   },
   {
@@ -39,8 +35,6 @@ export const routes = [
       icon: 'upload',
       span: 'picturesWall'
     },
-    // component: asyncComponent(()=>import('@/components/PicturesWall/PicturesWall'))
-    // component: require('@/components/PicturesWall/PicturesWall').default
     component: PicturesWall
   },
   {
@@ -50,6 +44,7 @@ export const routes = [
       icon: 'bar-chart',
       span: 'barChart'
     },
+    // component: require('@/components/barChart/index').default,
     component: BarChart,
     childrens: [
       {
@@ -68,6 +63,12 @@ export const routes = [
         key: 'pie',
         path: '/barChart/pie',
         title: '饼图',
+        iconf: '&#xe68b;'
+      },
+      {
+        key: 'radar',
+        path: '/barChart/radar',
+        title: '雷达图',
         iconf: '&#xe68b;'
       }
     ]

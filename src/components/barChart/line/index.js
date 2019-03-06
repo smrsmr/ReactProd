@@ -22,8 +22,8 @@ const echartsOption = {
   toolbox: {
     feature: {
       dataView : {show: true, readOnly: false},
-      magicType : {show: true, type: ['line', 'bar']}
-      // saveAsImage: {} //存取为图片
+      magicType : {show: true, type: ['line', 'bar']},
+      saveAsImage: {} //存取为图片
     }
   },
 
@@ -58,13 +58,13 @@ const echartsOption = {
       name:'翠逸家园',
       type:'line',
       stack: '总量',
-      data:[320, 332, 301, 334, 390, 330, 320]
+      data:[320, 332, 301, 334, 390, 330, 15]
     },
     {
       name:'紫林湾',
       type:'line',
       stack: '总量',
-      data:[820, 932, 901, 934, 1290, 1330, 1320]
+      data:[820, 932, 901, 934, 1290, 1330, 555]
     }
   ]
 };

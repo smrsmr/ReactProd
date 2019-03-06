@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
+// 异步组件
+import AsyncComponent from '@/utils/asyncComponent';
 class Mail extends Component {
-	state = {
-	  ID: null
-	}
-	componentWillMount() {
-	  this.setState({
-	    ID: this.props.match.params.id
-	  });
-	}
-	renderDetail(pageType) {
-	  const dynamicDetail = require(`./${pageType}/index`).default;
-
-	  return dynamicDetail;
-	}
-	render() {
+  renderDetail(pageType) {
+	  const Page = AsyncComponent(() => import(`./${pageType}/index`));
+	  return Page;
+  }
+  render() {
 	  const pageType = this.props.match.params.id; 
 	  const DynamicDetail = this.renderDetail(pageType); 
 	  return (
@@ -21,7 +14,7 @@ class Mail extends Component {
 	      <DynamicDetail /> 
 	    </div>
 	  );
-	}
+  }
 }
 
 export default Mail;

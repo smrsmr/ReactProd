@@ -41,7 +41,7 @@ const echartsOption = {
         {value:510, name:'鼎龙湾'},
         {value:338, name:'珍珠湾'},
         {value:265, name:'翠逸家园'},
-        {value:220, name:'紫林湾'}
+        {value:320, name:'紫林湾'}
       ]
     }
   ]

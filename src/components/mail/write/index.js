@@ -4,16 +4,13 @@ class Write extends Component {
 	state = {
 	  html: '<p>开始写信</p>'
 	}
-	componentDidMount() {
-    
-	}
+
 	render() {
 	  return (
 	    <div>
-	      {
-	        // React 渲染html
-	      }
-	      <h1 dangerouslySetInnerHTML={{__html:this.state.html}}></h1>
+	      {/*  React 渲染htm */ }
+	      <h1 dangerouslySetInnerHTML={{ __html: this.state.html }}></h1>
+	      <h2>Write</h2>
 	    </div>
 	  );
 	}

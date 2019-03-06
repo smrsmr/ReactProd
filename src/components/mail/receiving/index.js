@@ -4,7 +4,7 @@ export class Receiving extends Component {
   render() {
     return (
       <div>
-        <h1>开始收信</h1>
+        <h1>Receiving</h1>
       </div>
     );
   }
