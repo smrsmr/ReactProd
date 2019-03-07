@@ -24,6 +24,7 @@ export class Layouts extends Component {
   constructor(props, context) {
     super(props, context);
     this.newTabIndex = 0;
+    this.titleName = null;
     const panes = [];
 	  this.state = {
 	    collapsed: false,
@@ -38,11 +39,21 @@ export class Layouts extends Component {
 	  //组件挂载之前时候 获取url
     const pathname = window.location.hash.split('/').filter(i => i);
     // const pathname = window.location.pathname.split('/').filter(i => i);
-	  this.setState({
-	    pathName: pathname
+    const pn = window.location.hash.split('/').filter(i => i).pop();
+    this.setState({
+      pathName: pathname,
+      activeKey: pn
     });
-    const pn = pathname.pop();
-    panes.push({ title: pn , key: pn });
+    //显示标签名字
+    routes.forEach((v, k) => {
+      if (!v.hasOwnProperty('childrens') && v.key === pn) {
+        this.titleName = v.title.span;
+      }
+    });
+    if (pn==='#') {
+      return false;
+    }
+    panes.push({ title: this.titleName ,content: '', key: pn });
   }
 
 	toggle = () => {
@@ -54,10 +65,10 @@ export class Layouts extends Component {
 	MenuClick = () => {
 	  //点击侧边栏列表添加样式
 	  const pathname = window.location.hash.split('/').filter(i => i);
-	  const pn = pathname.pop();
 	  this.setState({
 	    pathName: pathname
 	  });
+	  const pn = window.location.hash.split('/').filter(i => i).pop();
 	  this.add(pn);
 	}
 	//Tabs
@@ -72,8 +83,19 @@ export class Layouts extends Component {
   add = (name) => {
     const { panes } = this.state;
     const activeKey = name;
-    panes.push({ title: name, content: '', key: activeKey });
+    const panesKey = panes.filter(pane => pane.key === name);
+    
     this.setState({ panes, activeKey });
+    //显示标签名字
+    routes.forEach((v, k) => {
+      if (!v.hasOwnProperty('childrens') && v.key === name) {
+        this.titleName = v.title.span;
+      }
+    });
+    if (panesKey.length > 0) {
+      return false;
+    }
+    panes.push({ title: this.titleName, content: '', key: activeKey });
   }
 
   remove = (targetKey) => {
@@ -168,7 +190,8 @@ export class Layouts extends Component {
 	                onChange={this.onChange}
 	                activeKey={this.state.activeKey}
 	                type="editable-card"
-	                onEdit={this.onEdit}
+                  onEdit={this.onEdit}
+                  defaultActiveKey={this.state.activeKey}
 	              >
 	                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key}></TabPane>)}
 	              </Tabs>
