@@ -24,7 +24,7 @@ export const routes = [
     path: '/user',
     title: {
       icon: 'user',
-      span: 'user'
+      span: '用户中心'
     },
     component: User
   },
@@ -33,7 +33,7 @@ export const routes = [
     path: '/picturesWall',
     title: {
       icon: 'upload',
-      span: 'picturesWall'
+      span: '上传图片'
     },
     component: PicturesWall
   },
@@ -42,7 +42,7 @@ export const routes = [
     path: '/barChart',
     title: {
       icon: 'bar-chart',
-      span: 'barChart'
+      span: '图形中心'
     },
     // component: require('@/components/barChart/index').default,
     component: BarChart,
@@ -78,7 +78,7 @@ export const routes = [
     path: '/mail',
     title: {
       icon: 'mail',
-      span: 'mail'
+      span: '收发邮件'
     },
     component: Mail,
     childrens: [{
