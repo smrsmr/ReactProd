@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Layout, Menu, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
 //公共样式
@@ -9,7 +10,7 @@ import 'moment/locale/zh-cn';
 import {routes,setRouter} from '@/router/index';
 //react-router-dom
 // import { BrowserRouter , Link } from 'react-router-dom';
-import { Router as HashRouter, Link } from 'react-router-dom';
+import { Router as HashRouter, Link  } from 'react-router-dom';
 import createHistory from 'history/createHashHistory';
 const history = createHistory();
 //antd
@@ -21,40 +22,50 @@ function onChange(date, dateString) {
   console.log(date, dateString);
 }
 export class Layouts extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.newTabIndex = 0;
-    this.titleName = null;
-    const panes = [];
+	static contextTypes = {
+	  router: PropTypes.object
+	}
+	constructor(props, context) {
+	  super(props, context);
+	  this.newTabIndex = 0;
+	  this.titleName = null;
+	  const panes = [];
 	  this.state = {
 	    collapsed: false,
-      pathName: null,
-      marginLeft: true,
-      activeKey: null,
-      panes
+	    pathName: null,
+	    marginLeft: true,
+	    activeKey: null,
+	    panes
 	  };
-  }
-  componentWillMount() {
-    const { panes } = this.state;
+	}
+	componentWillMount() {
+	  const { panes } = this.state;
 	  //组件挂载之前时候 获取url
-    const pathname = window.location.hash.split('/').filter(i => i);
-    // const pathname = window.location.pathname.split('/').filter(i => i);
-    const pn = window.location.hash.split('/').filter(i => i).pop();
-    this.setState({
-      pathName: pathname,
-      activeKey: pn
-    });
-    //显示标签名字
-    routes.forEach((v, k) => {
-      if (!v.hasOwnProperty('childrens') && v.key === pn) {
-        this.titleName = v.title.span;
-      }
-    });
-    if (pn==='#') {
-      return false;
-    }
-    panes.push({ title: this.titleName ,content: '', key: pn });
-  }
+	  const pathname = window.location.hash.split('/').filter(i => i);
+	  // const pathname = window.location.pathname.split('/').filter(i => i);
+	  const pn = window.location.hash.split('/').filter(i => i).pop();
+	  this.setState({
+	    pathName: pathname,
+	    activeKey: pn
+	  });
+	  //显示标签名字
+	  routes.forEach(v => {
+	    if (!v.hasOwnProperty('childrens') && v.key === pn) {
+	      this.titleName = v.title.span;
+	      return;
+	    }
+	    if (v.hasOwnProperty('childrens')) {
+	      const vName = v.childrens.filter(v => v.key === pn);
+	      if (vName.length > 0) {
+	        this.titleName = vName[0].title;
+	      }
+	    }
+	  });
+	  if (pn==='#') {
+	    return false;
+	  }
+	  panes.push({ title: this.titleName ,content: '', key: pn });
+	}
 
 	toggle = () => {
 	  this.setState({
@@ -68,7 +79,8 @@ export class Layouts extends Component {
 	  this.setState({
 	    pathName: pathname
 	  });
-	  const pn = window.location.hash.split('/').filter(i => i).pop();
+	  // const pn = window.location.hash.split('/').filter(i => i).pop();
+	  const pn = window.location.hash.replace('#','');
 	  this.add(pn);
 	}
 	//Tabs
@@ -84,14 +96,20 @@ export class Layouts extends Component {
     const { panes } = this.state;
     const activeKey = name;
     const panesKey = panes.filter(pane => pane.key === name);
-    
-    this.setState({ panes, activeKey });
     //显示标签名字
-    routes.forEach((v, k) => {
-      if (!v.hasOwnProperty('childrens') && v.key === name) {
+    routes.forEach(v => {
+      if (!v.hasOwnProperty('childrens') && v.key === name.replace('/','')) {
         this.titleName = v.title.span;
+        return;
+      }
+      if (v.hasOwnProperty('childrens')) {
+        const vName = v.childrens.filter(v => v.path === name);
+        if (vName.length > 0) {
+          this.titleName = vName[0].title;
+        }
       }
     });
+    this.setState({ panes, activeKey });
     if (panesKey.length > 0) {
       return false;
     }
@@ -114,9 +132,15 @@ export class Layouts extends Component {
         activeKey = panes[0].key;
       }
     }
+    //删除标签的时候 路由切换到上一个位置
+    panes.length <= 0 ? history.push('/') : history.push(activeKey);
     this.setState({ panes, activeKey });
   }
-  render() {
+	TabsClick = (url) => {
+	  //点击tabs的时候切换相应路由
+	  history.push(url);
+	}
+	render() {
 	  const MenuTree = (
 	    routes.map((item,key) => (
 	      <Menu
@@ -190,8 +214,10 @@ export class Layouts extends Component {
 	                onChange={this.onChange}
 	                activeKey={this.state.activeKey}
 	                type="editable-card"
-                  onEdit={this.onEdit}
-                  defaultActiveKey={this.state.activeKey}
+	                onEdit={this.onEdit}
+	                defaultActiveKey={this.state.activeKey}
+	                tabBarGutter={10}
+	                onTabClick={this.TabsClick}
 	              >
 	                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key}></TabPane>)}
 	              </Tabs>
@@ -202,7 +228,7 @@ export class Layouts extends Component {
 	      </HashRouter>
 	    </div>
 	  );
-  }
+	}
 }
 
 export default hot(module)(Layouts);
