@@ -42,20 +42,19 @@ export class Layouts extends Component {
 	  const { panes } = this.state;
 	  //组件挂载之前时候 获取url
 	  const pathname = window.location.hash.split('/').filter(i => i);
-	  // const pathname = window.location.pathname.split('/').filter(i => i);
-	  const pn = window.location.hash.split('/').filter(i => i).pop();
+	  const pn = window.location.hash.replace('#', '');
 	  this.setState({
 	    pathName: pathname,
 	    activeKey: pn
 	  });
 	  //显示标签名字
 	  routes.forEach(v => {
-	    if (!v.hasOwnProperty('childrens') && v.key === pn) {
+	    if (!v.hasOwnProperty('childrens') && v.key === pn.replace('/','')) {
 	      this.titleName = v.title.span;
 	      return;
 	    }
 	    if (v.hasOwnProperty('childrens')) {
-	      const vName = v.childrens.filter(v => v.key === pn);
+	      const vName = v.childrens.filter(v => v.path === pn);
 	      if (vName.length > 0) {
 	        this.titleName = vName[0].title;
 	      }
@@ -79,13 +78,20 @@ export class Layouts extends Component {
 	  this.setState({
 	    pathName: pathname
 	  });
+	 
 	  // const pn = window.location.hash.split('/').filter(i => i).pop();
 	  const pn = window.location.hash.replace('#','');
 	  this.add(pn);
 	}
 	//Tabs
 	onChange = (activeKey) => {
-	  this.setState({ activeKey });
+	  //点击tabs切换同步侧边栏
+	  const paneActive = activeKey.split('/').filter(i => i);
+	  paneActive.unshift('#');
+	  this.setState({
+	    activeKey: activeKey,
+	    pathName: paneActive
+	  });
 	}
 
   onEdit = (targetKey, action) => {
@@ -116,26 +122,41 @@ export class Layouts extends Component {
     panes.push({ title: this.titleName, content: '', key: activeKey });
   }
 
-  remove = (targetKey) => {
-    let {activeKey} = this.state;
-    let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-    if (panes.length && activeKey === targetKey) {
-      if (lastIndex >= 0) {
-        activeKey = panes[lastIndex].key;
-      } else {
-        activeKey = panes[0].key;
-      }
-    }
-    //删除标签的时候 路由切换到上一个位置
-    panes.length <= 0 ? history.push('/') : history.push(activeKey);
-    this.setState({ panes, activeKey });
-  }
+	remove = (targetKey) => {
+	  let {activeKey} = this.state;
+	  let lastIndex;
+	  this.state.panes.forEach((pane, i) => {
+	    if (pane.key === targetKey) {
+	      lastIndex = i - 1;
+	    }
+	  });
+	  const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+	  if (panes.length && activeKey === targetKey) {
+	    if (lastIndex >= 0) {
+	      activeKey = panes[lastIndex].key;
+	    } else {
+	      activeKey = panes[0].key;
+	    }
+	  }
+	  const paneTarget = activeKey.split('/').filter(i => i);
+	  paneTarget.unshift('#');
+	  //删除标签的时候 路由切换到上一个位置
+	  if (panes.length <= 0) {
+	    history.push('/');
+	    this.setState({
+	      pathName: ['']
+	    });
+	  } else {
+	    history.push(activeKey);
+	    this.setState({
+	      pathName: paneTarget
+	    });
+	  }
+	  this.setState({
+	    panes: panes,
+	    activeKey: activeKey
+	  });
+	}
 	TabsClick = (url) => {
 	  //点击tabs的时候切换相应路由
 	  history.push(url);
