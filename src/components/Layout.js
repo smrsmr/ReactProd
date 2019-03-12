@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
+import { Layout, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
 //公共样式
 import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 //router
-import {routes,setRouter} from '@/router/index';
+import {routes,setRouter,MenuTree} from '@/router/index';
 //react-router-dom
 // import { BrowserRouter , Link } from 'react-router-dom';
-import { Router as HashRouter, Link  } from 'react-router-dom';
+import { Router as HashRouter  } from 'react-router-dom';
 import createHistory from 'history/createHashHistory';
 const history = createHistory();
 //antd
 const { Header, Sider, Content } = Layout;
 const { RangePicker } = DatePicker;
-const { SubMenu } = Menu;
 const {TabPane} = Tabs;
 function onChange(date, dateString) {
   console.log(date, dateString);
@@ -34,7 +33,7 @@ export class Layouts extends Component {
 	    activeKey: null,
       defaultOpenKeys: [],
 	    panes
-	  };
+	  }; 
   }
   componentWillMount() {
 	  const { panes,defaultOpenKeys } = this.state;
@@ -47,8 +46,8 @@ export class Layouts extends Component {
 	  });
 	  //显示标签名字
 	  routes.forEach(v => {
-      if (!v.hasOwnProperty('childrens') && v.key === pn.replace('/', '')) {
-	      this.titleName = v.title.span;
+      if (!v.hasOwnProperty('childrens') && v.path === pn) {
+        this.titleName = v.title.span;
 	      return;
 	    }
 	    if (v.hasOwnProperty('childrens')) {
@@ -57,16 +56,15 @@ export class Layouts extends Component {
 	        this.titleName = vName[0].title;
 	        defaultOpenKeys.push(v.key);
 	      }
-	    }
+      }
 	  });
 	  if (pn==='/home') {   //判断首页 则不添加tabs
 	    return false;
-	  }
-
+    }
 	  panes.push({ title: this.titleName ,content: '', key: pn});
   }
-
 	toggle = () => {
+	  //切换侧边栏展开与收缩 
 	  this.setState({
 	    collapsed: !this.state.collapsed,
 	    marginLeft: !this.state.marginLeft
@@ -121,6 +119,7 @@ export class Layouts extends Component {
   }
 
 	remove = (targetKey) => {
+	  //删除tabs标签 方法
 	  let {activeKey} = this.state;
 	  let lastIndex;
 	  this.state.panes.forEach((pane, i) => {
@@ -159,43 +158,9 @@ export class Layouts extends Component {
 	  //点击tabs的时候切换相应路由
 	  if (history.location.pathname !== url) history.push(url);
 	}
+
+
 	render() {
-	  const MenuTree = (
-	    routes.map((item,key) => (
-	      <Menu
-	        key={key}
-	        theme="light"
-	        mode="inline"
-	        onClick={this.MenuClick}
-	        selectedKeys={this.state.pathName}
-	        defaultOpenKeys={this.state.defaultOpenKeys}
-	      >
-	        {
-	          //一级路由
-	          !item.childrens && !item.exact && (
-	            <Menu.Item key={item.key}>
-	              <Link to={item.path} replace>
-	                <Icon type={item.title.icon} />
-	                <span>{item.title.span}</span>
-	              </Link>
-	            </Menu.Item>
-	          )
-	        }
-	        {
-	          //二级路由 
-	          item.childrens && !item.exact && (
-	            <SubMenu key={item.key} title={<span><Icon type={item.title.icon} /><span>{item.title.span}</span></span>}>
-	              {
-	                item.childrens.map(v => (
-	                  <Menu.Item key={v.key}><Link to={v.path} replace><i className="iconfont" dangerouslySetInnerHTML={{__html:v.iconf}}></i>{v.title}</Link></Menu.Item>
-	                ))
-	              }
-	            </SubMenu>
-	          )
-	        }
-	      </Menu>
-	    ))
-	  );
 	  return (
 	    <div className="Layout">
 	      <HashRouter history={history}>
@@ -207,7 +172,13 @@ export class Layouts extends Component {
 	            style={{overflow: 'auto', height: '100vh', position: 'fixed', left: 0}}
 	          >
 	            <div className="logo"><img src={require('@/img/logo.svg')} alt="" /></div>
-	            {MenuTree}
+	            <MenuTree
+	              theme="light"
+	        			mode="inline"
+	              MenuClick={this.MenuClick}
+	              selectedKeys={this.state.pathName}
+	              defaultOpenKeys={this.state.defaultOpenKeys}
+	            />
 	          </Sider>
 	          <Layout style={{ marginLeft: this.state.marginLeft ? 200 : 80 }}>
 	            <Header style={{ background: '#fff', padding: 0 }}>

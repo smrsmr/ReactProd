@@ -2,12 +2,14 @@
  * router 配置文件
  */
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Menu, Icon } from 'antd';
 //utils
 import Bundle from '@/utils/Bundle.js';
 //404组件
 import NoMatch from '@/components/404/NoMatch';
-
+const { SubMenu } = Menu;
+const Home = (props) => (<Bundle load={() => import('@/components/home/Home')}>{(Home) => <Home {...props}/>}</Bundle>);
 const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);
 const PicturesWall = (props) => (<Bundle load={() => import('@/components/PicturesWall/PicturesWall')}>{(PicturesWall) => <PicturesWall {...props}/>}</Bundle>);
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
@@ -20,7 +22,7 @@ export const routes = [
     title: {
       span: '首页'
     },
-    component: require('@/components/home/Home').default
+    component: Home
   },
   {
     key: 'user',
@@ -134,7 +136,42 @@ export const routes = [
     component: PicturesWall
   }
 ];
-
+export const MenuTree =(props)=> (
+  routes.map((item,key) => (
+    <Menu
+      key={key}
+      theme={props.theme}
+      mode={props.mode} 
+      onClick={props.MenuClick}
+      selectedKeys={props.selectedKeys}
+      defaultOpenKeys={props.defaultOpenKeys}
+    >
+      {
+        //一级路由
+        !item.childrens && !item.exact && (
+          <Menu.Item key={item.key}>
+            <Link to={item.path} replace>
+              <Icon type={item.title.icon} />
+              <span>{item.title.span}</span>
+            </Link>
+          </Menu.Item>
+        )
+      }
+      {
+        //二级路由 
+        item.childrens && !item.exact && (
+          <SubMenu key={item.key} title={<span><Icon type={item.title.icon} /><span>{item.title.span}</span></span>}>
+            {
+              item.childrens.map(v => (
+                <Menu.Item key={v.key}><Link to={v.path} replace><i className="iconfont" dangerouslySetInnerHTML={{__html:v.iconf}}></i>{v.title}</Link></Menu.Item>
+              ))
+            }
+          </SubMenu>
+        )
+      }
+    </Menu>
+  ))
+);
 export const setRouter = (
   <Switch>
     {
@@ -149,7 +186,7 @@ export const setRouter = (
         }
       })
     }
-    <Redirect path="/" to="/home" />
+    { /* <Redirect path="/" to="/home" /> */ }
     <Route component={NoMatch} />
   </Switch>
 );
