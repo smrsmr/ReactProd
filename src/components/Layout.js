@@ -24,14 +24,15 @@ export class Layouts extends Component {
   constructor(props, context) {
 	  super(props, context);
 	  this.newTabIndex = 0;
-	  this.titleName = null;
-	  const panes = [];
+    this.titleName = '首页';
+    this.isClosable = true; //tabs 是否可被关闭
+	  const panes = [{ title: this.titleName ,content: '', key: '/home', closable: false }];
 	  this.state = {
 	    collapsed: false,
 	    pathName: null,
 	    marginLeft: true,
 	    activeKey: null,
-	    defaultOpenKeys: [],
+      defaultOpenKeys: [],
 	    panes
 	  };
   }
@@ -39,14 +40,14 @@ export class Layouts extends Component {
 	  const { panes,defaultOpenKeys } = this.state;
 	  //组件挂载之前时候 获取url
 	  const pathname = window.location.hash.split('/').filter(i => i);
-	  const pn = window.location.hash.replace('#', '');
+    const pn = window.location.hash.replace('#', '');
 	  this.setState({
 	    pathName: pathname,
 	    activeKey: pn
 	  });
 	  //显示标签名字
 	  routes.forEach(v => {
-	    if (!v.hasOwnProperty('childrens') && v.key === pn.replace('/','')) {
+      if (!v.hasOwnProperty('childrens') && v.key === pn.replace('/', '')) {
 	      this.titleName = v.title.span;
 	      return;
 	    }
@@ -58,10 +59,11 @@ export class Layouts extends Component {
 	      }
 	    }
 	  });
-	  if (pn==='/') {   //判断首页 则不添加tabs
+	  if (pn==='/home') {   //判断首页 则不添加tabs
 	    return false;
 	  }
-	  panes.push({ title: this.titleName ,content: '', key: pn });
+
+	  panes.push({ title: this.titleName ,content: '', key: pn});
   }
 
 	toggle = () => {
@@ -136,13 +138,13 @@ export class Layouts extends Component {
 	  }
 	  const paneTarget = activeKey.split('/').filter(i => i);
 	  paneTarget.unshift('#');
-	  //删除标签的时候 路由切换到上一个位置
 	  if (panes.length <= 0) {
-	    history.push('/');
+	    //当tabs为0的时候去除侧边栏点击的样式
 	    this.setState({
 	      pathName: ['']
 	    });
 	  } else {
+	    // 防止重复点击
 	    if (history.location.pathname !== activeKey) history.push(activeKey);
 	    this.setState({
 	      pathName: paneTarget
@@ -237,7 +239,7 @@ export class Layouts extends Component {
 	                tabBarGutter={10}
 	                onTabClick={this.TabsClick}
 	              >
-	                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key}></TabPane>)}
+	                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}></TabPane>)}
 	              </Tabs>
 	              {setRouter}
 	            </Content>

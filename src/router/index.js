@@ -2,7 +2,7 @@
  * router 配置文件
  */
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 //utils
 import Bundle from '@/utils/Bundle.js';
 //404组件
@@ -15,8 +15,11 @@ const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>
 export const routes = [
   {
     key: 'home',
-    path: '/',
+    path: '/home',
     exact: 'exact',
+    title: {
+      span: '首页'
+    },
     component: require('@/components/home/Home').default
   },
   {
@@ -146,6 +149,7 @@ export const setRouter = (
         }
       })
     }
+    <Redirect path="/" to="/home" />
     <Route component={NoMatch} />
   </Switch>
 );
