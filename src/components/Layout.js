@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Layout, Menu, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
 //公共样式
@@ -22,10 +21,7 @@ function onChange(date, dateString) {
   console.log(date, dateString);
 }
 export class Layouts extends Component {
-	static contextTypes = {
-	  router: PropTypes.object
-	}
-	constructor(props, context) {
+  constructor(props, context) {
 	  super(props, context);
 	  this.newTabIndex = 0;
 	  this.titleName = null;
@@ -35,11 +31,12 @@ export class Layouts extends Component {
 	    pathName: null,
 	    marginLeft: true,
 	    activeKey: null,
+	    defaultOpenKeys: [],
 	    panes
 	  };
-	}
-	componentWillMount() {
-	  const { panes } = this.state;
+  }
+  componentWillMount() {
+	  const { panes,defaultOpenKeys } = this.state;
 	  //组件挂载之前时候 获取url
 	  const pathname = window.location.hash.split('/').filter(i => i);
 	  const pn = window.location.hash.replace('#', '');
@@ -57,14 +54,15 @@ export class Layouts extends Component {
 	      const vName = v.childrens.filter(v => v.path === pn);
 	      if (vName.length > 0) {
 	        this.titleName = vName[0].title;
+	        defaultOpenKeys.push(v.key);
 	      }
 	    }
 	  });
-	  if (pn==='#') {
+	  if (pn==='/') {   //判断首页 则不添加tabs
 	    return false;
 	  }
 	  panes.push({ title: this.titleName ,content: '', key: pn });
-	}
+  }
 
 	toggle = () => {
 	  this.setState({
@@ -78,9 +76,7 @@ export class Layouts extends Component {
 	  this.setState({
 	    pathName: pathname
 	  });
-	 
-	  // const pn = window.location.hash.split('/').filter(i => i).pop();
-	  const pn = window.location.hash.replace('#','');
+	  const pn = window.location.hash.replace('#', '');
 	  this.add(pn);
 	}
 	//Tabs
@@ -147,7 +143,7 @@ export class Layouts extends Component {
 	      pathName: ['']
 	    });
 	  } else {
-	    history.push(activeKey);
+	    if (history.location.pathname !== activeKey) history.push(activeKey);
 	    this.setState({
 	      pathName: paneTarget
 	    });
@@ -159,7 +155,7 @@ export class Layouts extends Component {
 	}
 	TabsClick = (url) => {
 	  //点击tabs的时候切换相应路由
-	  history.push(url);
+	  if (history.location.pathname !== url) history.push(url);
 	}
 	render() {
 	  const MenuTree = (
@@ -170,6 +166,7 @@ export class Layouts extends Component {
 	        mode="inline"
 	        onClick={this.MenuClick}
 	        selectedKeys={this.state.pathName}
+	        defaultOpenKeys={this.state.defaultOpenKeys}
 	      >
 	        {
 	          //一级路由
