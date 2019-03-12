@@ -1,3 +1,7 @@
+/**
+ * 未完成
+ * 当router url错误的时候重定向到404组件  相应的tabs要显示错误的url名字
+ */
 import React, { Component } from 'react';
 import { Layout, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
