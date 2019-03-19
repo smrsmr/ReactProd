@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import { Layout, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
+
 //公共样式
 import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -27,7 +28,7 @@ export class Layouts extends Component {
   constructor(props, context) {
 	  super(props, context);
 	  this.newTabIndex = 0;
-    this.titleName = '首页';
+    this.titleName = '首页';  //默认第一个tabs文本
     this.isClosable = true; //tabs 是否可被关闭
 	  const panes = [{ title: this.titleName ,content: '', key: '/home', closable: false }];
 	  this.state = {
@@ -42,8 +43,9 @@ export class Layouts extends Component {
   componentWillMount() {
 	  const { panes,defaultOpenKeys } = this.state;
 	  //组件挂载之前时候 获取url
-	  const pathname = window.location.hash.split('/').filter(i => i);
-    const pn = window.location.hash.replace('#', '');
+    const pathname = window.location.hash.split('/').filter(i => i);
+    let pn = window.location.hash.replace('#', '');
+    if (pn === '/') { history.push('/home'); pn = '/home'; }
 	  this.setState({
 	    pathName: pathname,
 	    activeKey: pn
@@ -65,7 +67,7 @@ export class Layouts extends Component {
 	  if (pn==='/home') {   //判断首页 则不添加tabs
 	    return false;
     }
-	  panes.push({ title: this.titleName ,content: '', key: pn});
+    panes.push({ title: this.titleName, content: '', key: pn });
   }
 	toggle = () => {
 	  //切换侧边栏展开与收缩 

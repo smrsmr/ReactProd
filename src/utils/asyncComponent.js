@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { message } from 'antd';
 const asyncComponent = (importComponent) => {
   return class extends Component {
     constructor() {
@@ -12,8 +13,7 @@ const asyncComponent = (importComponent) => {
         .then(cmp => {
           this.setState({ component: cmp.default });
         }).catch(() => {
-          //出错的时候重定向到首页
-          window.location.href = '/';
+          message.warning('url地址不存在或没权限访问');
         });
     }
     componentWillUnmount() {

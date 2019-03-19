@@ -2,7 +2,7 @@
  * router 配置文件
  */
 import React from 'react';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 //utils
 import Bundle from '@/utils/Bundle.js';
@@ -136,6 +136,8 @@ export const routes = [
     component: PicturesWall
   }
 ];
+
+//渲染侧边栏
 export const MenuTree =(props)=> (
   routes.map((item,key) => (
     <Menu
@@ -186,7 +188,6 @@ export const setRouter = (
         }
       })
     }
-    { /* <Redirect path="/" to="/home" /> */ }
     <Route component={NoMatch} />
   </Switch>
 );
