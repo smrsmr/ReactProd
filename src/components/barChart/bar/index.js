@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
+import api from '@/api/axios';
+import '@/mock';
 const echartsOption = {
   title: {
     text: '基础柱状图'
@@ -16,6 +18,14 @@ const echartsOption = {
   }]
 };
 export class Bar extends Component {
+  componentDidMount() {
+    api.mockdataPost('/data/getchart')
+      .then(res => {
+        console.log(res);
+        echartsOption.xAxis.data = res.Xdata;
+        echartsOption.series[0].data = res.Sdata;
+      });
+  }
   onChartClick(e) {
     console.log(`${e.name}-销量:${e.data}`);
   }

@@ -3,7 +3,7 @@ import api from '@/api/axios';
 import '@/mock';
 export class Receiving extends Component {
   componentDidMount() {
-    api.mockdata('/data/index')
+    api.mockdataPost('/data/index')
       .then(res => {
         console.log(res);
       });
