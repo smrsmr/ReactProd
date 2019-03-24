@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import api from '@/api/axios';
-import '@/mock';
 export class Receiving extends Component {
   componentDidMount() {
-    api.mockdataPost('/data/index')
-      .then(res => {
-        console.log(res);
-      });
+
   }
   render() {
     return (

@@ -14,6 +14,7 @@ const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{
 const PicturesWall = (props) => (<Bundle load={() => import('@/components/PicturesWall/PicturesWall')}>{(PicturesWall) => <PicturesWall {...props}/>}</Bundle>);
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
 const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
+const Table = (props) => (<Bundle load={() => import('@/components/Table/index')}>{(Table) => <Table {...props}/>}</Bundle>);
 export const routes = [
   {
     key: 'home',
@@ -100,20 +101,20 @@ export const routes = [
     }]
   },
   {
+    key: 'table',
+    path: '/table',
+    title: {
+      icon: 'appstore-o',
+      span: '表格'
+    },
+    component: Table
+  },
+  {
     key: 'cloudO',
     path: '/cloudO',
     title: {
       icon: 'cloud-o',
       span: 'cloudO'
-    },
-    component: PicturesWall
-  },
-  {
-    key: 'appstoreO',
-    path: '/appstoreO',
-    title: {
-      icon: 'appstore-o',
-      span: 'appstoreO'
     },
     component: PicturesWall
   },

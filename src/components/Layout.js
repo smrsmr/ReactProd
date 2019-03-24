@@ -94,6 +94,8 @@ export class Layouts extends Component {
 	    activeKey: activeKey,
 	    pathName: paneActive
 	  });
+	  //热更新之后 重新赋值history.location.pathname
+	  // history.location.pathname = activeKey;
 	}
 
   onEdit = (targetKey, action) => {
@@ -161,6 +163,8 @@ export class Layouts extends Component {
 	  });
 	}
 	TabsClick = (url) => {
+	  // console.log(history.location.pathname); 
+	  // console.log(url);
 	  //点击tabs的时候切换相应路由
 	  if (history.location.pathname !== url) history.push(url);
 	}
@@ -169,7 +173,7 @@ export class Layouts extends Component {
 	render() {
 	  return (
 	    <div className="Layout">
-	      <HashRouter history={history}>
+	      <HashRouter history={history} key={Math.random()}>
 	        <Layout style={{ minHeight: '100vh' }}>
 	          <Sider
 	            trigger={null}

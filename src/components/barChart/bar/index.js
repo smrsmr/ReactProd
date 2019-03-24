@@ -21,7 +21,7 @@ export class Bar extends Component {
   componentDidMount() {
     api.mockdataPost('/data/getchart')
       .then(res => {
-        console.log(res);
+        // console.log(res);
         echartsOption.xAxis.data = res.Xdata;
         echartsOption.series[0].data = res.Sdata;
       });
