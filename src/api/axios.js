@@ -27,9 +27,9 @@ export function fetchPost(url, params) {
       });
   });
 }
-export function fetchGet(url) {
+export function fetchGet(url,params) {
   return new Promise((resolve, reject) => {
-    axios.get(url)
+    axios.get(url,params)
       .then(response => {
         resolve(response.data);
       })
@@ -43,7 +43,7 @@ export default {
   mockdataPost(url, params) {
     return fetchPost(url, params);
   },
-  mockdataGet(url) {
-    return fetchGet(url);
+  mockdataGet(url,params) {
+    return fetchGet(url,params);
   }
 };

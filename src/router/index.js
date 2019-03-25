@@ -9,7 +9,7 @@ import Bundle from '@/utils/Bundle.js';
 //404组件
 import NoMatch from '@/components/404/NoMatch';
 const { SubMenu } = Menu;
-const Home = (props) => (<Bundle load={() => import('@/components/home/Home')}>{(Home) => <Home {...props}/>}</Bundle>);
+const Home = (props) => (<Bundle load={() => import('@/components/home/index')}>{(Home) => <Home {...props}/>}</Bundle>);
 const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);
 const PicturesWall = (props) => (<Bundle load={() => import('@/components/PicturesWall/PicturesWall')}>{(PicturesWall) => <PicturesWall {...props}/>}</Bundle>);
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);

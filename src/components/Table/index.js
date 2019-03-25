@@ -13,8 +13,8 @@ export default class index extends Component {
 	};
 	componentWillMount() {
 	  let { data, height, loading } = this.state;
-	  height = parseInt(window.innerHeight-240);
-	  api.mockdataPost('/data/index')
+	  height = parseInt(window.innerHeight - 240);
+	  api.mockdataGet('/data/index')
 	    .then(res => {
 	      data = res;
 	      loading = false;

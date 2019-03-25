@@ -36,7 +36,7 @@ for(let i = 0; i < 1500; i ++) { // 可自定义生成的个数
   data.push(template);
 }
  
-Mock.mock('/data/index', 'post', data); // 根据数据模板生成模拟数据
+Mock.mock('/data/index', 'get', data); // 根据数据模板生成模拟数据
 
 //生成图表数据
 const chartData = {
