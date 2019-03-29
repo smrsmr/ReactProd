@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { message } from 'antd';
+// import { message } from 'antd';
 const asyncComponent = (importComponent) => {
   return class extends Component {
     constructor() {
@@ -13,7 +13,7 @@ const asyncComponent = (importComponent) => {
         .then(cmp => {
           this.setState({ component: cmp.default });
         }).catch(() => {
-          message.warning('url地址不存在或没权限访问');
+          // message.warning('url地址不存在或没权限访问');
         });
     }
     componentWillUnmount() {

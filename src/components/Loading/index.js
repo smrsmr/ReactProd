@@ -9,10 +9,11 @@ function Loading(props) {
     return <div className="Loading"><Spin size="large" /></div>;
   } else {
     return null;
-  }
+  } 
 }
 const LoadableComponent = Loadable({
-  loader: () => import('@/components/Layout.js'),
+  // loader: () => import('@/components/Layout-HashRouter.js'),
+  loader: () => import('@/components/Layout-BrowserRouter.js'),
   loading: Loading,
   delay: 300
 });

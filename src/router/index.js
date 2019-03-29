@@ -2,12 +2,11 @@
  * router 配置文件
  */
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect  } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 //utils
 import Bundle from '@/utils/Bundle.js';
-//404组件
-import NoMatch from '@/components/404/NoMatch';
+import history  from '@/history.js';
 const { SubMenu } = Menu;
 const Home = (props) => (<Bundle load={() => import('@/components/home/index')}>{(Home) => <Home {...props}/>}</Bundle>);
 const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);
@@ -15,6 +14,7 @@ const PicturesWall = (props) => (<Bundle load={() => import('@/components/Pictur
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
 const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
 const Table = (props) => (<Bundle load={() => import('@/components/Table/index')}>{(Table) => <Table {...props}/>}</Bundle>);
+const Errors = (props) => (<Bundle load={() => import('@/components/404/index')}>{(Errors) => <Errors {...props}/>}</Bundle>);
 export const routes = [
   {
     key: 'home',
@@ -24,6 +24,16 @@ export const routes = [
       span: '首页'
     },
     component: Home
+  },
+  {
+    key: 'error',
+    path: '/error',
+    exact: 'exact',
+    title: {
+      icon: 'error',
+      span: 'error'
+    },
+    component: Errors
   },
   {
     key: 'user',
@@ -189,6 +199,11 @@ export const setRouter = (
         }
       })
     }
-    <Route component={NoMatch} />
+    <Route render={() => 
+      <Redirect to='/error'></Redirect>}
+    {...history.push('/error')}
+    >
+    </Route>
+   
   </Switch>
 );

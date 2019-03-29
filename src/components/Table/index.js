@@ -16,6 +16,7 @@ export default class index extends Component {
 	  height = parseInt(window.innerHeight - 240);
 	  api.mockdataGet('/data/index')
 	    .then(res => {
+	      // console.log(res);
 	      data = res;
 	      loading = false;
 	      this.setState({ data,height,loading });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Button } from 'antd';
+import { Tabs } from 'antd';
 const {TabPane} = Tabs;
 export class Tab extends Component {
   constructor(props) {
