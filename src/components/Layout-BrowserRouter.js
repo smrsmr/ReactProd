@@ -28,7 +28,7 @@ export class Layouts extends Component {
 	  this.newTabIndex = 0;
 	  this.titleName = '';  //默认tabs文本
 	  this.isClosable = true; //tabs 是否可被关闭
-	  const panes = [{ title: '首页' ,content: '', key: '/home', closable: false }];
+	  const panes = [{ title: '首页' ,content: '', key: '/', closable: false }];
 	  this.state = {
 	    collapsed: false,
 	    pathName: null,
@@ -39,12 +39,10 @@ export class Layouts extends Component {
 	  }; 
 	}
 	componentWillMount() {
-	  // console.log(history);
 	  const { panes,defaultOpenKeys } = this.state;
 	  //组件挂载之前时候 获取url
-	  const pathname = window.location.pathname.split('/').filter(i => i);
+	  const pathname = history.location.pathname.split('/').filter(i => i);
 	  const pn = window.location.pathname;
-	  if (pn === '/') { history.push('/home');}
 	  this.setState({
 	    pathName: pathname,
 	    activeKey: pn
@@ -63,7 +61,8 @@ export class Layouts extends Component {
 	      }
 	    }
 	  });
-	  if (pn==='/home' || pn==='/error') {   //判断首页 则不添加tabs
+	  const filterPath = routes.filter(v => v.path === pn);
+	  if (pn==='/' || filterPath.length <= 0 || pn==='/error') {   //判断首页 则不添加tabs
 	    return false;
 	  }
 	  panes.push({ title: this.titleName, content: '', key: pn });
@@ -81,14 +80,14 @@ export class Layouts extends Component {
 	  this.setState({
 	    pathName: pathname
 	  });
-	  const pn = window.location.pathname.replace('#', '');
+	  const pn = window.location.pathname;
 	  this.add(pn);
 	}
 	//Tabs
 	onChange = (activeKey) => {
 	  //点击tabs切换同步侧边栏
 	  const paneActive = activeKey.split('/').filter(i => i);
-	  paneActive.unshift('#');
+	  // paneActive.unshift('#');
 	  this.setState({
 	    activeKey: activeKey,
 	    pathName: paneActive
@@ -142,8 +141,6 @@ export class Layouts extends Component {
 	      activeKey = panes[0].key;
 	    }
 	  }
-	  //热更新之后 重新赋值history.location.pathname
-	  // history.location.pathname = activeKey;
 	  const paneTarget = activeKey.split('/').filter(i => i);
 	  if (panes.length <= 0) {
 	    //当tabs为0的时候去除侧边栏点击的样式

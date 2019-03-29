@@ -6,7 +6,6 @@ import { Route, Switch, Link, Redirect  } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 //utils
 import Bundle from '@/utils/Bundle.js';
-import history  from '@/history.js';
 const { SubMenu } = Menu;
 const Home = (props) => (<Bundle load={() => import('@/components/home/index')}>{(Home) => <Home {...props}/>}</Bundle>);
 const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);
@@ -17,8 +16,8 @@ const Table = (props) => (<Bundle load={() => import('@/components/Table/index')
 const Errors = (props) => (<Bundle load={() => import('@/components/404/index')}>{(Errors) => <Errors {...props}/>}</Bundle>);
 export const routes = [
   {
-    key: 'home',
-    path: '/home',
+    key: '/',
+    path: '/',
     exact: 'exact',
     title: {
       span: '首页'
@@ -199,11 +198,11 @@ export const setRouter = (
         }
       })
     }
-    <Route render={() => 
-      <Redirect to='/error'></Redirect>}
-    {...history.push('/error')}
+    <Route render={() =>
+      <Redirect to='/error' />
+    }
     >
+			
     </Route>
-   
   </Switch>
 );
