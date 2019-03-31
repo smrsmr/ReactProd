@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Layout, Icon, DatePicker, LocaleProvider,Tabs } from 'antd';
 import { hot } from 'react-hot-loader';
-import PropTypes from 'prop-types';
 //公共样式
 import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -20,10 +19,7 @@ function onChange(date, dateString) {
   console.log(date, dateString);
 }
 export class Layouts extends Component {
-	static contextTypes = {
-	  router: PropTypes.object
-	}
-	constructor(props, context) {
+  constructor(props, context) {
 	  super(props, context);
 	  this.newTabIndex = 0;    //创建新tab的Index
 	  this.titleName = 'error';  //默认tabs文本
@@ -37,8 +33,8 @@ export class Layouts extends Component {
 	    defaultOpenKeys: [],
 	    panes
 	  }; 
-	}
-	componentWillMount() {
+  }
+  componentWillMount() {
 	  const { panes,defaultOpenKeys } = this.state;
 	  //组件挂载之前时候 获取url
 	  const pathname = history.location.pathname.split('/').filter(i => i);
@@ -65,7 +61,7 @@ export class Layouts extends Component {
 	    return false;
 	  }
 	  panes.push({ title: this.titleName, content: '', key: pn });
-	}
+  }
 	toggle = () => {
 	  //切换侧边栏展开与收缩 
 	  this.setState({
@@ -86,13 +82,10 @@ export class Layouts extends Component {
 	onChange = (activeKey) => {
 	  //点击tabs切换同步侧边栏
 	  const paneActive = activeKey.split('/').filter(i => i);
-	  // paneActive.unshift('#');
 	  this.setState({
 	    activeKey: activeKey,
 	    pathName: paneActive
 	  });
-	  //热更新之后 重新赋值history.location.pathname
-	  // history.location.pathname = activeKey;
 	}
 
   onEdit = (targetKey, action) => {
