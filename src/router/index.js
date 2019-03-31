@@ -202,7 +202,6 @@ export const setRouter = (
       <Redirect to='/error' />
     }
     >
-			
     </Route>
   </Switch>
 );

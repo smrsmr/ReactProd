@@ -25,8 +25,8 @@ export class Layouts extends Component {
 	}
 	constructor(props, context) {
 	  super(props, context);
-	  this.newTabIndex = 0;
-	  this.titleName = '';  //默认tabs文本
+	  this.newTabIndex = 0;    //创建新tab的Index
+	  this.titleName = 'error';  //默认tabs文本
 	  this.isClosable = true; //tabs 是否可被关闭
 	  const panes = [{ title: '首页' ,content: '', key: '/', closable: false }];
 	  this.state = {
@@ -61,8 +61,7 @@ export class Layouts extends Component {
 	      }
 	    }
 	  });
-	  const filterPath = routes.filter(v => v.path === pn);
-	  if (pn==='/' || filterPath.length <= 0 || pn==='/error') {   //判断首页 则不添加tabs
+	  if (pn==='/') {   //判断首页 则不添加tabs
 	    return false;
 	  }
 	  panes.push({ title: this.titleName, content: '', key: pn });
