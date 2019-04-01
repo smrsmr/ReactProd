@@ -5,7 +5,7 @@ import React from 'react';
 import { Route, Switch, Link, Redirect  } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 //utils
-import Bundle from '@/utils/Bundle.js';
+import Bundle from '@/utils/Bundle.js';  //router 按需加载
 const { SubMenu } = Menu;
 const Home = (props) => (<Bundle load={() => import('@/components/home/index')}>{(Home) => <Home {...props}/>}</Bundle>);
 const User = (props) => (<Bundle load={() => import('@/components/user/User')}>{(User) => <User {...props}/>}</Bundle>);

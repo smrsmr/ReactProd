@@ -216,5 +216,4 @@ export class Layouts extends Component {
 	  );
 	}
 }
-
-export default hot(module)(Layouts);
+export default process.env.NODE_ENV === 'development' ? hot(module)(Layouts) : Layouts;

@@ -26,6 +26,7 @@ export default class index extends Component {
 		 this.setState = () => {
 	    return;
 	  };
+	  
 	}
 	getColumnSearchProps = (dataIndex) => ({
 	  filterDropdown: ({

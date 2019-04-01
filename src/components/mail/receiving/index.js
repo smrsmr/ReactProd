@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+const Title = styled.h1`
+	font-size: 50px;
+	color: red;
+	text-align: center;
+`;
 export class Receiving extends Component {
   componentDidMount() {
 
@@ -6,7 +12,7 @@ export class Receiving extends Component {
   render() {
     return (
       <div>
-        <h1>Receiving</h1>
+        <Title>Receiving</Title>
       </div>
     );
   }

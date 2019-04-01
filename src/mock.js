@@ -13,7 +13,7 @@ const size = [
   '300x600'
 ]; // 定义随机值
 
-for(let i = 0; i < 1800; i ++) { // 可自定义生成的个数
+for(let i = 0; i < 1200; i ++) { // 可自定义生成的个数
   const template = {
     'key': i,
     //'Boolean': Random.boolean, // 可以生成基本数据类型
