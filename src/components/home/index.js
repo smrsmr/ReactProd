@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Spin, Icon } from 'antd';
+// import { Spin, Icon } from 'antd';
 import echarts from 'echarts/lib/echarts';
 //要引入扩展不然会报错
 import 'echarts/extension/bmap/bmap';
 // 引入关系图
 import 'echarts/lib/chart/lines';
 import '@/styles/comms.less';
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+// const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 export default class index extends Component {
   constructor(props){
     super(props);
@@ -218,7 +218,7 @@ export default class index extends Component {
     this.myChart.clear();
   }
   render() {
-    const loading = this.state;
+    // const {loading} = this.state;
 	  return (
 		  <div id="main" style={{ width: '100%', height: '90%' }}></div>
 	  );
