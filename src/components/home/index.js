@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
-// import { Spin, Icon } from 'antd';
 import echarts from 'echarts/lib/echarts';
 //要引入扩展不然会报错
 import 'echarts/extension/bmap/bmap';
 // 引入关系图
 import 'echarts/lib/chart/lines';
 import '@/styles/comms.less';
-// const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 export default class index extends Component {
   constructor(props){
     super(props);
     this.myChart = null;
-    this.state = {
-      loading: false
-    };
+    this.throttle = this.throttle.bind(this);
+    this.resize = this.resize.bind(this);
   }
   componentDidMount() {
 	  // 基于准备好的dom，初始化echarts实例
 	  this.myChart = echarts.init(document.getElementById('main'));
 	  //lines-bus.json 为官方https://echarts.baidu.com/examples/data/asset/data/lines-bus.json 数据 保存到本地即可
 	  //fetch 访问json文件路径这里有个坑 我们需要把lines-bus.json 文件放到public文件夹 即和index.html 同一目录
+    this.myChart.showLoading({
+      text: 'loading',
+      color: '#4cbbff',
+      textColor: '#4cbbff',
+      maskColor: 'rgba(0, 0, 0, 0.9'
+    });
 	  fetch('./lines-bus.json').then(res => {
 	    return res.json();
-	  }).then(data => {
+    }).then(data => {
+      this.myChart.hideLoading();
 	    const hStep = 300 / (data.length - 1);
 	    const busLines = [].concat.apply([], data.map(function (busLine, idx) {
 	      let prevPt;
@@ -212,15 +216,32 @@ export default class index extends Component {
 	        zlevel: 1
 	      }]
 	    });
-	  });
+    });
+    window.addEventListener('resize',this.resize);
   }
-  componentWillUnmount(){
-    this.myChart.clear();
+  componentWillUnmount() {
+    this.myChart.dispose();
+    window.removeEventListener('resize',this.resize);
   }
-  render() {
-    // const {loading} = this.state;
+	//echarts 屏幕大小自适应
+	resize = () => {
+	  this.myChart.resize();
+	};
+	//节流函数 高频函数在一定时间内只执行一次 可以稀释函数执行频率
+	throttle = (fn) => {
+	  let isBreak = true;
+	  return function(){
+	    if (!isBreak) return;
+	    isBreak = false;
+	    setTimeout(() => {
+	      fn.call(this, arguments);
+	      isBreak = true;
+	    },500);
+	  };
+	}
+	render() {
 	  return (
 		  <div id="main" style={{ width: '100%', height: '90%' }}></div>
 	  );
-  }
+	}
 }
