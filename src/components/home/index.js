@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import echarts from 'echarts/lib/echarts';
 //要引入扩展不然会报错
 import 'echarts/extension/bmap/bmap';
-// 引入关系图
-import 'echarts/lib/chart/lines';
 import '@/styles/comms.less';
 export default class index extends Component {
   constructor(props){

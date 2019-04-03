@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Upload, Icon, Modal } from 'antd';
-
 class PicturesWall extends Component {
   state = {
     previewVisible: false,

@@ -7,7 +7,7 @@ import '@/styles/global.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 //router
-import {routes,setRouter,MenuTree} from '@/router/index';
+import {routes,SetRouter,MenuTree} from '@/router/index';
 //react-router-dom
 import { Router } from 'react-router-dom';
 import history  from '@/history.js';
@@ -192,7 +192,7 @@ export class Layouts extends Component {
 	              </LocaleProvider>
 	            </Header>
 	            <Content style={{
-	              margin: '0', padding: '0 0 0 24px', background: '#fff', minHeight: 280
+	              margin: '0', padding: '0 0 0 24px', background: '#fff', minHeight: 280, position: 'relative'
 	            }}
 	            >
 	              <Tabs
@@ -207,7 +207,7 @@ export class Layouts extends Component {
 	              >
 	                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}></TabPane>)}
 	              </Tabs>
-	              {setRouter}
+	              <SetRouter location={history.location} />
 	            </Content>
 	          </Layout>
 	        </Layout>

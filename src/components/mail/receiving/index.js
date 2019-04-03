@@ -5,6 +5,7 @@ const Title = styled.h1`
 	color: red;
 	text-align: center;
 `;
+
 export class Receiving extends Component {
   componentDidMount() {
 

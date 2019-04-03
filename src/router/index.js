@@ -3,7 +3,9 @@
  */
 import React from 'react';
 import { Route, Switch, Link, Redirect  } from 'react-router-dom';
+// import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Menu, Icon } from 'antd';
+import 'animate.css/animate.min.css';
 //utils
 import Bundle from '@/utils/Bundle.js';  //router 按需加载
 const { SubMenu } = Menu;
@@ -184,17 +186,17 @@ export const MenuTree =(props)=> (
     </Menu>
   ))
 );
-export const setRouter = (
-  <Switch>
+export const SetRouter = (poprs) => (
+  <Switch location={poprs.location}>
     {
       routes.map((router,key) => {
         if (router.exact) {
-          return  <Route exact key={key} path={router.path} component={router.component} />;
+          return <Route exact key={key} path={router.path} component={router.component} />;
         } else {
           if (router.childrens) {
-            return  <Route  key={key} path={`${router.path}/:id`} component={router.component} />;
+            return <Route key={key} path={`${router.path}/:id`} component={router.component} />;
           }
-          return  <Route  key={key} path={router.path} component={router.component} />;
+          return <Route key={key} path={router.path} component={router.component}/>;
         }
       })
     }
