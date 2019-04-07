@@ -62,6 +62,9 @@ export class Layouts extends Component {
 	  }
 	  panes.push({ title: this.titleName, content: '', key: pn });
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
 	toggle = () => {
 	  //切换侧边栏展开与收缩 
 	  this.setState({

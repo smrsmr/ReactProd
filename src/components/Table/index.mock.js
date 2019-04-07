@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
 import { Table, LocaleProvider} from 'antd';
 // import Highlighter from 'react-highlight-words';
-// import api from '@/api/axios';
-// import '@/mock';
-import axios from 'axios';
+import api from '@/api/axios';
+import '@/mock';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
-function fetchPost (current,pageSize){
-  return new Promise((resolve, reject) => {
-    axios.post('http://127.0.0.1:3001/test',{current:current,pageSize:pageSize})
-      .then(response => {
-        resolve(response.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
 export default class index extends Component {
 	state = {
 	  searchText: '',
@@ -25,22 +13,18 @@ export default class index extends Component {
 	  current: 1,
 	  pageSize: 30,
 	  total: 0,
-	  sortedInfo: null,
-	  up: 0
+	  sortedInfo: null
 	};
 	componentDidMount() {
 	  let { data, height, loading, current, pageSize, total } = this.state;
 	  height = parseInt(window.innerHeight - 240);
-	  fetchPost(current, pageSize).then(res => {
+	  api.mockdataPost('/data/index',{current:current,pageSize:pageSize})
+	    .then(res => {
 	      data = res.data;
 	      total = res.total;
 	      loading = false;
 	      this.setState({ data,height,loading,total });
-	  }).catch(e => {
-	    console.log(e);
-	    loading = false;
-	    this.setState({ loading });
-	  });
+	    });
 	}
 	componentWillUnmount() {
 		 this.setState = () => {
@@ -49,12 +33,13 @@ export default class index extends Component {
 	}
 	onShowSizeChange = (current, pageSize) => {
 	  let { data, height, loading } = this.state;
-	  this.setState({loading:true});
-	  fetchPost(current, pageSize).then(res => {
+	  api.mockdataPost('/data/index',{current:current,pageSize:pageSize})
+	    .then(res => {
+				
 	      data = res.data;
 	      loading = false;
 	      this.setState({ data,height,loading,current,pageSize });
-	  });
+	    });
 	}
 	handleChange = (pagination, filters, sorter) => {
 	  this.setState({
@@ -63,12 +48,12 @@ export default class index extends Component {
 	}
 	pagiChange = (current, pageSize) => {
 	  let { data, height, loading } = this.state;
-	  this.setState({loading:true});
-	  fetchPost(current, pageSize).then(res => {
+	  api.mockdataPost('/data/index',{current:current,pageSize:pageSize})
+	    .then(res => {
 	      data = res.data;
 	      loading = false;
 	      this.setState({ data,height,loading,current,pageSize });
-	  });
+	    });
 	}
 	render() {
 	  let { sortedInfo } = this.state;
@@ -112,8 +97,7 @@ export default class index extends Component {
 	      dataSource={this.state.data}
 	      pagination={{
 	        pageSize: pageSize,
-	          showSizeChanger: true,
-	          pageSizeOptions: ['10','30','50','70','100'],
+	        showSizeChanger: true,
 	        onShowSizeChange: this.onShowSizeChange,
 	        showQuickJumper: true,
 	          total: total,

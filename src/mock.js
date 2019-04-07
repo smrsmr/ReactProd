@@ -13,7 +13,7 @@ const size = [
   '300x600'
 ]; // 定义随机值
 
-for(let i = 0; i < 1200; i ++) { // 可自定义生成的个数
+for(let i = 0; i < 4000; i ++) { // 可自定义生成的个数
   const template = {
     'key': i,
     //'Boolean': Random.boolean, // 可以生成基本数据类型
@@ -25,7 +25,7 @@ for(let i = 0; i < 1200; i ++) { // 可自定义生成的个数
     //'Range': Random.range(0, 10, 2), // 生成一个随机数组
     //'Cparagraph': Random.cparagraph(), // 生成一段随机文本
     'date': Random.date(), // 生成一个随机日期,可加参数定义日期格式
-    'phone': /(13[0-9]|14[0145689]|15[0-9]|16[2567]|17[0-8]|18[0-9]|19[189])[0-9]{8}$/,  //生成符合规制的手机号码
+    'phone': Mock.mock(/(13[0-9]|14[0145689]|15[0-9]|16[2567]|17[0-8]|18[0-9]|19[189])[0-9]{8}$/),  //生成符合规制的手机号码
     //'Image': Random.image(Random.size, '#02adea', 'Hello'), // Random.size表示将从size数据中任选一个数据
     //'Color': Random.color(), // 生成一个颜色随机值
     //'Paragraph':Random.paragraph(2, 5), //生成2至5个句子的文本
@@ -35,8 +35,23 @@ for(let i = 0; i < 1200; i ++) { // 可自定义生成的个数
   };
   data.push(template);
 }
- 
-Mock.mock('/data/index', 'get', data); // 根据数据模板生成模拟数据
+/**
+ * 分页返回数据
+ * @param {*} current 当前页数
+ * @param {*} pageSize 每页显示多少条数据
+ */
+function Data(current, pageSize, data) {
+  const start = current * pageSize -pageSize; 
+  let end = current * pageSize;
+  const len = data.length;
+  end = end >= len ? len : end;
+  data = data.slice(start, end);
+  return {data:data,total:len};
+}
+Mock.mock('/data/index', 'post', function (options) {
+  const body = JSON.parse(options.body);
+  return Data(body.current,body.pageSize,data);
+}); // 根据数据模板生成模拟数据
 
 //生成图表数据
 const chartData = {
