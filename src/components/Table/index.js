@@ -54,6 +54,10 @@ export default class index extends Component {
 	      data = res.data;
 	      loading = false;
 	      this.setState({ data,height,loading,current,pageSize });
+	  }).catch(e => {
+	    console.log(e);
+	    loading = false;
+	    this.setState({ loading });
 	  });
 	}
 	handleChange = (pagination, filters, sorter) => {
@@ -68,6 +72,10 @@ export default class index extends Component {
 	      data = res.data;
 	      loading = false;
 	      this.setState({ data,height,loading,current,pageSize });
+	  }).catch(e => {
+	    console.log(e);
+	    loading = false;
+	    this.setState({ loading });
 	  });
 	}
 	render() {
