@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Table, LocaleProvider} from 'antd';
-// import Highlighter from 'react-highlight-words';
-// import api from '@/api/axios';
-// import '@/mock';
 import axios from 'axios';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 function fetchPost (current,pageSize){
@@ -119,13 +116,14 @@ export default class index extends Component {
 	      columns={columns}
 	      dataSource={this.state.data}
 	      pagination={{
-	        pageSize: pageSize,
+	        	pageSize: pageSize,
 	          showSizeChanger: true,
 	          pageSizeOptions: ['10','30','50','70','100'],
-	        onShowSizeChange: this.onShowSizeChange,
-	        showQuickJumper: true,
+	          onShowSizeChange: this.onShowSizeChange,
+	          showQuickJumper: true,
 	          total: total,
-	          onChange: this.pagiChange
+	          onChange: this.pagiChange,
+	          showTotal: (e=>'共'+e+'条')
 	      }}
 	        scroll={{ y: this.state.height }}
 	        loading={this.state.loading}
