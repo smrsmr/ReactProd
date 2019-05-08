@@ -15,6 +15,7 @@ const PicturesWall = (props) => (<Bundle load={() => import('@/components/Pictur
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
 const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
 const Table = (props) => (<Bundle load={() => import('@/components/Table/index')}>{(Table) => <Table {...props}/>}</Bundle>);
+const Team = (props) => (<Bundle load={() => import('@/components/team/index')}>{(Team) => <Team {...props}/>}</Bundle>);
 const Errors = (props) => (<Bundle load={() => import('@/components/404/index')}>{(Errors) => <Errors {...props}/>}</Bundle>);
 export const routes = [
   {
@@ -136,7 +137,7 @@ export const routes = [
       icon: 'team',
       span: 'team'
     },
-    component: PicturesWall
+    component: Team
   },
   {
     key: 'shop',

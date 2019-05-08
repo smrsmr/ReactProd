@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Table, LocaleProvider} from 'antd';
 import axios from 'axios';
+import api from '@/api/api.js';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 function fetchPost (current,pageSize){
   return new Promise((resolve, reject) => {
-    axios.post('http://127.0.0.1:3001/test',{current:current,pageSize:pageSize})
+    axios.post(`${api}/test`,{current:current,pageSize:pageSize})
       .then(response => {
         resolve(response.data);
       })

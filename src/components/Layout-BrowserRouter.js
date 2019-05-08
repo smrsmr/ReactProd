@@ -62,6 +62,7 @@ export class Layouts extends Component {
 	  }
 	  panes.push({ title: this.titleName, content: '', key: pn });
   }
+  // eslint-disable-next-line no-unused-vars
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
