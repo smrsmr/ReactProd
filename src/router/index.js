@@ -15,7 +15,7 @@ const PicturesWall = (props) => (<Bundle load={() => import('@/components/Pictur
 const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/index')}>{(BarChart) => <BarChart {...props}/>}</Bundle>);
 const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
 const Table = (props) => (<Bundle load={() => import('@/components/Table/index')}>{(Table) => <Table {...props}/>}</Bundle>);
-const Team = (props) => (<Bundle load={() => import('@/components/team/index')}>{(Team) => <Team {...props}/>}</Bundle>);
+const Redux = (props) => (<Bundle load={() => import('@/components/redux/index')}>{(Redux) => <Redux {...props}/>}</Bundle>);
 const Errors = (props) => (<Bundle load={() => import('@/components/404/index')}>{(Errors) => <Errors {...props}/>}</Bundle>);
 export const routes = [
   {
@@ -69,25 +69,25 @@ export const routes = [
         key: 'line',
         path: '/barChart/line',
         title: '折线图',
-        iconf: '&#xe600;'
+        iconf: 'iconzhexiantu'
       },
       {
         key: 'bar',
         path: '/barChart/bar',
         title: '柱状图',
-        iconf: '&#xe601;'
+        iconf: 'iconzhuzhuangtu'
       },
       {
         key: 'pie',
         path: '/barChart/pie',
         title: '饼图',
-        iconf: '&#xe68b;'
+        iconf: 'iconpie-chart'
       },
       {
         key: 'radar',
         path: '/barChart/radar',
         title: '雷达图',
-        iconf: '&#xe68b;'
+        iconf: 'iconiconset0398'
       }
     ]
   },
@@ -103,13 +103,13 @@ export const routes = [
       key: 'write',
       path: '/mail/write',
       title: '写信',
-      iconf: '&#xe606;'
+      iconf: 'iconwoyaoxiexin'
     },
     {
       key: 'receiving',
       path: '/mail/receiving',
       title: '收信',
-      iconf: '&#xe60f;'
+      iconf: 'iconshouhuo'
     }]
   },
   {
@@ -131,13 +131,13 @@ export const routes = [
     component: PicturesWall
   },
   {
-    key: 'team',
-    path: '/team',
+    key: 'redux',
+    path: '/redux',
     title: {
-      icon: 'team',
-      span: 'team'
+      iconf: 'iconrdx',
+      span: 'redux'
     },
-    component: Team
+    component: Redux
   },
   {
     key: 'shop',
@@ -151,6 +151,9 @@ export const routes = [
 ];
 
 //渲染侧边栏
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1065831_lsv418ao3il.js'
+});
 export const MenuTree =(props)=> (
   routes.map((item,key) => (
     <Menu
@@ -166,7 +169,7 @@ export const MenuTree =(props)=> (
         !item.childrens && !item.exact && (
           <Menu.Item key={item.key}>
             <Link to={item.path} replace>
-              <Icon type={item.title.icon} />
+              {item.title.icon ? <Icon type={item.title.icon} />:<IconFont type={item.title.iconf} />}
               <span>{item.title.span}</span>
             </Link>
           </Menu.Item>
@@ -178,7 +181,7 @@ export const MenuTree =(props)=> (
           <SubMenu key={item.key} title={<span><Icon type={item.title.icon} /><span>{item.title.span}</span></span>}>
             {
               item.childrens.map(v => (
-                <Menu.Item key={v.key}><Link to={v.path} replace><i className="iconfont" dangerouslySetInnerHTML={{__html:v.iconf}}></i>{v.title}</Link></Menu.Item>
+                <Menu.Item key={v.key}><Link to={v.path} replace><IconFont type={v.iconf} />{v.title}</Link></Menu.Item>
               ))
             }
           </SubMenu>

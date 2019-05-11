@@ -11,9 +11,13 @@ const store = createStore(simpleReducer);
 
 console.log(store.getState()); */
 // eslint-disable-next-line no-unused-vars
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-
-function shop(state = {num: 0,name:'当前商品总数:0'}, action) {
+import { createStore, combineReducers, applyMiddleware,compose  } from 'redux';
+//redux 异步
+import thunk from 'redux-thunk';
+/**
+ * 修改state 只能通过提交action
+ */
+/* function shop(state = { num: 0, name: '当前商品总数:0' }, action) {
   switch (action.type) {
   case 'SHOP':
     return {
@@ -21,11 +25,23 @@ function shop(state = {num: 0,name:'当前商品总数:0'}, action) {
       num: action.num,
       name: action.name
     };
+  default:
+    return state;
   }
-
-  return state;
+	
+} */
+function num(state=0,action) {
+  switch (action.type) {
+  case 'INCREASE': 
+    return state + 1;
+  
+  case 'SUBTRACT': 
+    return state - 1;
+		
+  default: 
+    return state;
+  }
 }
-
 /* function project(state = { name: 'min-react' }, action) {
 
   switch (action.type) {
@@ -38,12 +54,16 @@ function shop(state = {num: 0,name:'当前商品总数:0'}, action) {
 
   return state;
 } */
-
-
 const rootReducer = combineReducers({
-  shop
+  // shop
+  num
 });
+
+//可以异步分发action
+const finalCreateStore = compose(applyMiddleware(thunk))(createStore);
+const store = finalCreateStore(rootReducer, {});
+export default store;
 
 /* const store = createStore(rootReducer);
 const state = store.getState(); */
-export const store = createStore(rootReducer);
+// export const store = createStore(rootReducer);
