@@ -16,6 +16,7 @@ const BarChart = (props) => (<Bundle load={() => import('@/components/barChart/i
 const Mail = (props) => (<Bundle load={() => import('@/components/mail/index')}>{(Mail) => <Mail {...props}/>}</Bundle>);
 const Table = (props) => (<Bundle load={() => import('@/components/Table/index')}>{(Table) => <Table {...props}/>}</Bundle>);
 const Redux = (props) => (<Bundle load={() => import('@/components/redux/index')}>{(Redux) => <Redux {...props}/>}</Bundle>);
+const Shop = (props) => (<Bundle load={() => import('@/components/shop/index')}>{(Shop) => <Shop {...props}/>}</Bundle>);
 const Errors = (props) => (<Bundle load={() => import('@/components/404/index')}>{(Errors) => <Errors {...props}/>}</Bundle>);
 export const routes = [
   {
@@ -146,7 +147,7 @@ export const routes = [
       icon: 'shop',
       span: 'shop'
     },
-    component: PicturesWall
+    component: Shop
   }
 ];
 

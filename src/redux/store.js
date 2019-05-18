@@ -14,6 +14,7 @@ console.log(store.getState()); */
 import { createStore, combineReducers, applyMiddleware,compose  } from 'redux';
 //redux 异步
 import thunk from 'redux-thunk';
+import { INCREASE,SUBTRACT } from './actions';
 /**
  * 修改state 只能通过提交action
  */
@@ -32,10 +33,10 @@ import thunk from 'redux-thunk';
 } */
 function num(state=0,action) {
   switch (action.type) {
-  case 'INCREASE': 
+  case INCREASE: 
     return state + 1;
   
-  case 'SUBTRACT': 
+  case SUBTRACT: 
     return state - 1;
 		
   default: 

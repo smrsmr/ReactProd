@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
-import store  from '@/redux/store';
+import store from '@/redux/store';
+import {increse,subtarct} from '@/redux/actions';
 export default class index extends Component {
 	state = {
 	  num: 0,
@@ -34,11 +35,10 @@ export default class index extends Component {
 	  //   num: num,
 	  //   name: `当前商品总数:${num}`
 	  // });
-	  store.dispatch(function(dispatch){
+	  store.dispatch(function (dispatch, getState) {
+	    if (getState().num >= 40) return;
 	    setTimeout(() => {
-	      dispatch({
-	        type: 'INCREASE'
-	      });
+	      dispatch(increse());
 	    },0);
 	  });
 	  // const { name } = store.getState().shop;
@@ -47,9 +47,7 @@ export default class index extends Component {
 	}
 	subtract = () => {
 	  if (store.getState().num <= 0) return;
-	  store.dispatch({
-	    type: 'SUBTRACT'
-	  });
+	  store.dispatch(subtarct());
 	}
 	render() {
 	  const { num, name } = this.state;
