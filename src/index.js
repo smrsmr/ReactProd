@@ -1,6 +1,8 @@
 import 'react-app-polyfill/ie9';
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { Provider } from 'react-redux';
+// import store from '@/redux/store';
 import '@/styles/index.less';
 // import App from '@/components/Layout.js';
 import App from '@/components/Loading/index';
@@ -9,7 +11,7 @@ import * as serviceWorker from './serviceWorker';
 
 
 ReactDOM.render(
-  <App/>,
+  <App />,
   document.getElementById('root')
 );
 

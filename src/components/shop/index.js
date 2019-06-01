@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, message  } from 'antd';
+import { Button, message } from 'antd';
 const ws = new WebSocket('ws://127.0.0.1:8080/websocket');
 // const heartbeat_timer = null;
 export default class index extends Component {

@@ -14,23 +14,25 @@ console.log(store.getState()); */
 import { createStore, combineReducers, applyMiddleware,compose  } from 'redux';
 //redux 异步
 import thunk from 'redux-thunk';
-import { INCREASE,SUBTRACT } from './actions';
+import { INCREASE,SUBTRACT,SHOP } from './actions';
 /**
  * 修改state 只能通过提交action
  */
-/* function shop(state = { num: 0, name: '当前商品总数:0' }, action) {
+function shop(state = { id: 0, name: '苹果',pice: 0, num: 0 }, action) {
   switch (action.type) {
-  case 'SHOP':
+  case SHOP:
     return {
       ...state,
-      num: action.num,
-      name: action.name
+      id: action.id,
+      name: action.name,
+      pice: action.pice,
+      num: action.num
     };
   default:
     return state;
   }
 	
-} */
+}
 function num(state=0,action) {
   switch (action.type) {
   case INCREASE: 
@@ -56,7 +58,7 @@ function num(state=0,action) {
   return state;
 } */
 const rootReducer = combineReducers({
-  // shop
+  shop,
   num
 });
 

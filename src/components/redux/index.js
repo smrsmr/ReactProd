@@ -29,6 +29,7 @@ export default class index extends Component {
 	    return;
 	  };
 	}
+	//增加
 	increase = () => {
 	  // store.dispatch({
 	  //   type: 'SHOP',
@@ -45,6 +46,7 @@ export default class index extends Component {
 	  // this.setState({num,name});
 	  // console.log(store.getState());
 	}
+	//减少
 	subtract = () => {
 	  if (store.getState().num <= 0) return;
 	  store.dispatch(subtarct());
@@ -58,6 +60,7 @@ export default class index extends Component {
 	      <h2>{name}</h2>
 	      <Button type="primary" onClick={this.increase}>+</Button>
 	      <Button type="primary" onClick={this.subtract}>-</Button>
+	      <hr />
 	    </div>
 	  );
 	}
