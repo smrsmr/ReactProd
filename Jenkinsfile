@@ -1,5 +1,10 @@
 pipeline {
-    agent { docker 'node:latest' }
+    agent {
+        docker {
+            image 'node:8'
+            args '-p 3000:3000'
+        }
+    }
     stages {
         stage('Install') {
             steps {
