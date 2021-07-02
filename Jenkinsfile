@@ -1,14 +1,14 @@
 pipeline {
-    agent any
+    agent { docker 'node:latest' }
     stages {
         stage('Install') {
             steps {
-                sh 'yarn'
+                sh 'npm install'
             }
         }
         stage('Build') {
             steps {
-                sh 'yarn build'
+                sh 'npm run build'
             }
         }   
     }
